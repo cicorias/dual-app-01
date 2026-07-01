@@ -1,0 +1,67 @@
+[tools]
+
+[tasks.install-databricks-skills]
+description = "Install ALL Databricks agent skills (project, symlinked) for github-copilot and claude-code"
+shell = "bash -c"
+run = """
+set -euo pipefail
+
+# npx skills does not create the .claude/skills root, so ensure it (and .agents) exist first
+mkdir -p .claude/skills
+mkdir -p .agents/skills
+
+# Project install with symlinks (default), all skills, both agents
+npx -y skills add databricks/databricks-agent-skills \
+  -s '*' \
+  -a github-copilot \
+  -a claude-code \
+  -y
+
+# Verify both agent skill roots exist when done
+test -d .agents/skills || { echo 'ERROR: .agents/skills missing' >&2; exit 1; }
+test -d .claude/skills || { echo 'ERROR: .claude/skills missing' >&2; exit 1; }
+
+echo 'Databricks skills installed for github-copilot and claude-code.'
+"""
+
+[tasks.update-databricks-skills]
+description = "Update all installed Databricks agent skills (project scope) to their latest versions"
+shell = "bash -c"
+run = """
+set -euo pipefail
+
+# Update all project-scoped skills to latest versions (non-interactive)
+npx -y skills update --project --yes
+
+echo 'Databricks skills updated to latest versions.'
+"""
+
+[tasks.install-ai-dev-kit-skills]
+description = "Install selected Databricks skills from databricks-solutions/ai-dev-kit for github-copilot and claude-code"
+shell = "bash -c"
+run = """
+set -euo pipefail
+
+# npx skills does not create the .claude/skills root, so ensure it (and .agents) exist first
+mkdir -p .claude/skills
+mkdir -p .agents/skills
+
+# ai-dev-kit stores skills under databricks-skills/, so --full-depth is required to discover them
+npx -y skills add databricks-solutions/ai-dev-kit \
+  --full-depth \
+  -s databricks-genie \
+  -s databricks-mlflow-evaluation \
+  -s databricks-python-sdk \
+  -s databricks-synthetic-data-gen \
+  -s databricks-unity-catalog \
+  -s databricks-aibi-dashboards \
+  -a github-copilot \
+  -a claude-code \
+  -y
+
+# Verify both agent skill roots exist when done
+test -d .agents/skills || { echo 'ERROR: .agents/skills missing' >&2; exit 1; }
+test -d .claude/skills || { echo 'ERROR: .claude/skills missing' >&2; exit 1; }
+
+echo 'ai-dev-kit skills installed for github-copilot and claude-code.'
+"""

@@ -101,7 +101,7 @@ Copy this checklist and verify each item:
 
 | Concept | Details |
 |---------|---------|
-| **Runtime** | Python 3.11, Ubuntu 22.04, 2 vCPU, 6 GB RAM |
+| **Runtime** | Python 3.12, Ubuntu 24.04, 2 vCPU, 6 GB RAM |
 | **Pre-installed** | Dash 2.18.1, Streamlit 1.38.0, Gradio 4.44.0, Flask 3.0.3, FastAPI 0.115.0 |
 | **Auth (app)** | Service principal via `Config()` — auto-injected `DATABRICKS_CLIENT_ID`/`DATABRICKS_CLIENT_SECRET` |
 | **Auth (user)** | `x-forwarded-access-token` header — see [references/1-authorization.md](references/1-authorization.md) |
@@ -235,7 +235,7 @@ class EntityIn(BaseModel):
 
 | Constraint | Details |
 |------------|---------|
-| **Runtime** | Python 3.11, Ubuntu 22.04 LTS |
+| **Runtime** | Python 3.12, Ubuntu 24.04 LTS |
 | **Compute** | 2 vCPUs, 6 GB memory (default) |
 | **Pre-installed frameworks** | Dash, Streamlit, Gradio, Flask, FastAPI, Shiny |
 | **Custom packages** | Add to `requirements.txt` in app root |

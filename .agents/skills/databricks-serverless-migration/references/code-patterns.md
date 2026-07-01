@@ -551,7 +551,7 @@ export MODEL_REGISTRY=production
 {
   "environment_key": "ml_env",
   "spec": {
-    "client": "2",
+    "client": "5",
     "dependencies": [
       "mlflow==2.12.1",
       "scikit-learn==1.3.0",

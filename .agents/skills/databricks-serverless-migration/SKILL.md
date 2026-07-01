@@ -283,7 +283,7 @@ The migration output MUST include a Serverless Environment specification alongsi
 {
   "environment_key": "Default",
   "spec": {
-    "client": "2",
+    "client": "5",
     "dependencies": ["mlflow==2.12.1", "scikit-learn==1.3.0", "xgboost==2.0.3"]
   }
 }
@@ -570,6 +570,7 @@ Remove `job_clusters`/`new_cluster`, add `environments` with serverless spec, re
 | 13.x, 14.x | `"1"` | 3.10 |
 | 15.x | `"2"` | 3.11 |
 | 16.x+ | `"3"` | 3.12 |
+| 16.x+ (recommended) | `"5"` | 3.12 (env 5, Connect 18) |
 
 ### Job Definition Migration
 

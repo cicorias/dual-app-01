@@ -2,7 +2,7 @@
 name = "dual-app-a"
 version = "0.1.0"
 description = "App A — static site + server-side proxy to App B"
-requires-python = ">=3.11"
+requires-python = ">=3.12"
 dependencies = [
     "databricks-sdk>=0.40.0",
     "fastapi>=0.115.0",

@@ -105,17 +105,19 @@ Python runtime. The project requires Python 3.12 (per `databricks/.python-versio
 | 1 | 3.10.12 | 14.3 | ❌ Too old |
 | 2 | 3.11.10 | 15.4 | ❌ Too old |
 | **3** | **3.12.3** | **16.4** | ✅ Minimum supported |
-| **4** | **3.12.3** | **17.3** | ✅ Recommended |
-| **5** | **3.12.3** | **18** | ✅ Latest |
+| **4** | **3.12.3** | **17.3** | ✅ Supported |
+| **5** | **3.12.3** | **18** | ✅ Recommended (latest) |
 
-**Always specify `client: "3"` or higher** in environment specs for serverless
-jobs to get Python 3.12. Example for job submission:
+Version **5** targets Ubuntu 24.04, Databricks Connect 18, Scala 2.13.16, JDK 17.
+
+**Prefer `client: "5"`** (env version 3 is the floor) in environment specs for
+serverless jobs to get Python 3.12. Example for job submission:
 
 ```json
 "environments": [{
   "environment_key": "default",
   "spec": {
-    "client": "3",
+    "client": "5",
     "dependencies": ["<wheel-path>"]
   }
 }]

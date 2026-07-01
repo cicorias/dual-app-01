@@ -329,7 +329,7 @@ In the Databricks UI:
   "environments": [{
     "environment_key": "serverless_env",
     "spec": {
-      "client": "2",
+      "client": "5",
       "dependencies": ["pandas==2.2.3", "numpy==2.2.2"]
     }
   }],
@@ -412,7 +412,7 @@ export MODEL_ENV=production
   "environments": [{
     "environment_key": "etl_env",
     "spec": {
-      "client": "2",
+      "client": "5",
       "dependencies": [
         "mlflow==2.12.1",
         "scikit-learn==1.3.0",
@@ -458,6 +458,7 @@ Match the serverless environment version to the DBR version the workload was run
 | 13.x, 14.x | `"1"` | 3.10 |
 | 15.x | `"2"` | 3.11 |
 | 16.x+ | `"3"` | 3.12 |
+| 16.x+ (recommended) | `"5"` | 3.12 (env 5, Connect 18) |
 
 Example environment configuration:
 
@@ -466,7 +467,7 @@ Example environment configuration:
   "environments": [{
     "environment_key": "serverless_env",
     "spec": {
-      "client": "2",
+      "client": "5",
       "dependencies": ["pandas==2.2.3"]
     }
   }]
@@ -491,7 +492,7 @@ w.jobs.create(
     )],
     environments=[jobs.JobEnvironment(
         environment_key="serverless_env",
-        spec=jobs.JobEnvironmentSpec(client="2", dependencies=[]),
+        spec=jobs.JobEnvironmentSpec(client="5", dependencies=[]),
     )],
 )
 ```
@@ -571,7 +572,7 @@ w.jobs.create(
     )],
     environments=[jobs.JobEnvironment(
         environment_key="serverless_env",
-        spec=jobs.JobEnvironmentSpec(client="2", dependencies=[]),
+        spec=jobs.JobEnvironmentSpec(client="5", dependencies=[]),
     )],
 )
 ```

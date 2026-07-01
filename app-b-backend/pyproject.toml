@@ -2,7 +2,7 @@
 name = "dual-app-b"
 version = "0.1.0"
 description = "App B — Databricks backend (SQL warehouse, Genie, secrets)"
-requires-python = ">=3.11"
+requires-python = ">=3.12"
 dependencies = [
     "databricks-sdk>=0.40.0",
     "databricks-sql-connector>=3.7.0",

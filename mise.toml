@@ -1,6 +1,6 @@
 [tools]
 uv = "latest"
-python = "3.11"
+python = "3.12"
 
 [tasks.sync]
 description = "Install both apps' dependencies with uv (from each app's pyproject.toml)"
@@ -24,7 +24,14 @@ run = "uv run --no-project scripts/install_databricks_skills.py"
 
 [tasks.update-databricks-skills]
 description = "Update all installed Databricks agent skills (project scope) to their latest versions"
-run = "uv run --no-project scripts/update_databricks_skills.py"
+run = [
+  "uv run --no-project scripts/update_databricks_skills.py",
+  "uv run --no-project scripts/apply_skill_overrides.py",
+]
+
+[tasks.apply-skill-overrides]
+description = "Re-apply project-local (env-5 / Python 3.12) overrides onto vendored Databricks skills"
+run = "uv run --no-project scripts/apply_skill_overrides.py"
 
 [tasks.install-ai-dev-kit-skills]
 description = "Install selected Databricks skills from databricks-solutions/ai-dev-kit for github-copilot and claude-code"

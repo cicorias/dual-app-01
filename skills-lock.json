@@ -1,6 +1,12 @@
 {
   "version": 1,
   "skills": {
+    "archify": {
+      "source": "tt-a1i/archify",
+      "sourceType": "github",
+      "skillPath": "archify/SKILL.md",
+      "computedHash": "37116e4a7a0fa8a7e545376d643c099f191bd6546abc70e6711b0e4042c29db3"
+    },
     "databricks-agent-bricks": {
       "source": "databricks/databricks-agent-skills",
       "sourceType": "github",
@@ -101,7 +107,7 @@
       "source": "databricks/databricks-agent-skills",
       "sourceType": "github",
       "skillPath": "skills/databricks-metric-views/SKILL.md",
-      "computedHash": "2b2472ed5c24f45dbfc963231e2f4bb4bb67f79d9dc1d270ad6279c964a24f76"
+      "computedHash": "79f06619ad9b430c21710454de3510c9189d30bd4c71630fdaf0483203203fcd"
     },
     "databricks-ml-training": {
       "source": "databricks/databricks-agent-skills",

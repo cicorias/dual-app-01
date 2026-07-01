@@ -130,7 +130,7 @@ scored = spark.createDataFrame(pdf)
 {
   "environment_key": "Default",
   "spec": {
-    "client": "2",
+    "client": "5",
     "dependencies": ["mlflow>=2.20.0", "scikit-learn==1.3.0"]
   }
 }

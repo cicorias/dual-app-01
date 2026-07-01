@@ -1,5 +1,6 @@
 bundle:
   name: dual-app-01
+  engine: direct
 
 variables:
   warehouse_id:

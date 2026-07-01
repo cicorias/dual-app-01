@@ -1,0 +1,3 @@
+# Databricks Apps only natively installs requirements.txt. We install uv here,
+# then app.yaml runs `uv run`, which resolves real deps from pyproject.toml.
+uv

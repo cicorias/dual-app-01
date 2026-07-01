@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Dual App Demo — App A → App B</title>
+  <style>
+    :root { color-scheme: light dark; }
+    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+           max-width: 820px; margin: 2rem auto; padding: 0 1rem; line-height: 1.5; }
+    h1 { font-size: 1.4rem; }
+    .card { border: 1px solid #8883; border-radius: 10px; padding: 1rem; margin: 1rem 0; }
+    button { padding: .5rem .9rem; border-radius: 8px; border: 1px solid #8886;
+             cursor: pointer; background: #2563eb; color: #fff; }
+    button:disabled { opacity: .6; cursor: default; }
+    input { padding: .45rem .6rem; border-radius: 8px; border: 1px solid #8886; width: 60%; }
+    pre { background: #8881; padding: .8rem; border-radius: 8px; overflow: auto; max-height: 320px; }
+    .muted { color: #8889; font-size: .9rem; }
+  </style>
+</head>
+<body>
+  <h1>Dual Databricks Apps Demo</h1>
+  <p class="muted">
+    This static site (App&nbsp;A) calls its own backend, which proxies
+    server-to-server to App&nbsp;B. App&nbsp;B talks to the SQL warehouse,
+    Genie, and a secret scope.
+  </p>
+
+  <div class="card">
+    <h2>1. Read a secret (App B)</h2>
+    <button onclick="call('secret','GET')">GET /api/secret</button>
+    <pre id="out-secret">—</pre>
+  </div>
+
+  <div class="card">
+    <h2>2. Run SQL on the warehouse (App B)</h2>
+    <input id="sql" value="SELECT current_catalog() AS catalog, current_date() AS today" />
+    <button onclick="runQuery()">POST /api/query</button>
+    <pre id="out-query">—</pre>
+  </div>
+
+  <div class="card">
+    <h2>3. Ask Genie (App B)</h2>
+    <input id="q" value="How many rows are in the dataset?" />
+    <button onclick="askGenie()">POST /api/genie</button>
+    <pre id="out-genie">—</pre>
+  </div>
+
+  <script>
+    async function call(name, method, body) {
+      const el = document.getElementById('out-' + name);
+      el.textContent = 'Loading…';
+      try {
+        const res = await fetch('/api/' + name, {
+          method,
+          headers: body ? { 'content-type': 'application/json' } : undefined,
+          body: body ? JSON.stringify(body) : undefined,
+        });
+        const data = await res.json();
+        el.textContent = JSON.stringify(data, null, 2);
+      } catch (e) {
+        el.textContent = 'Error: ' + e;
+      }
+    }
+    function runQuery() {
+      call('query', 'POST', { sql: document.getElementById('sql').value });
+    }
+    function askGenie() {
+      call('genie', 'POST', { question: document.getElementById('q').value });
+    }
+  </script>
+</body>
+</html>

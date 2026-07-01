@@ -1,4 +1,29 @@
 [tools]
+uv = "latest"
+python = "3.11"
+
+[tasks.sync]
+description = "Install both apps' dependencies with uv (from each app's pyproject.toml)"
+shell = "bash -c"
+run = """
+set -euo pipefail
+for dir in app-a-frontend app-b-backend; do
+  echo "==> uv sync in $dir"
+  (cd "$dir" && uv sync)
+done
+"""
+
+[tasks.run-app-b]
+description = "Run App B (Databricks backend) locally on port 8001"
+dir = "app-b-backend"
+env = { DATABRICKS_APP_PORT = "8001", DATABRICKS_WAREHOUSE_ID = "5a6d583dd36d089a", GENIE_SPACE_ID = "01f12d30ddc31b1f9b6afd01e8c027ab", DEMO_SECRET_SCOPE = "dual-app-demo", DEMO_SECRET_KEY = "greeting" }
+run = "uv run uvicorn app:app --host 0.0.0.0 --port 8001"
+
+[tasks.run-app-a]
+description = "Run App A (frontend + proxy) locally on port 8000, proxying to App B on 8001"
+dir = "app-a-frontend"
+env = { DATABRICKS_APP_PORT = "8000", APP_B_URL = "http://127.0.0.1:8001" }
+run = "uv run uvicorn app:app --host 0.0.0.0 --port 8000"
 
 [tasks.install-databricks-skills]
 description = "Install ALL Databricks agent skills (project, symlinked) for github-copilot and claude-code"

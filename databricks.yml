@@ -1,0 +1,71 @@
+bundle:
+  name: dual-app-01
+
+variables:
+  warehouse_id:
+    description: SQL warehouse for App B queries and Genie
+    default: 5a6d583dd36d089a
+  genie_space_id:
+    description: Genie space App B queries
+    default: 01f12d30ddc31b1f9b6afd01e8c027ab
+  secret_scope:
+    default: dual-app-demo
+  secret_key:
+    default: greeting
+
+resources:
+  apps:
+    # ---------- App B: Databricks backend ----------
+    dual-app-b:
+      name: dual-app-b
+      description: "App B — Databricks backend (SQL warehouse, Genie, secrets)"
+      source_code_path: ./app-b-backend
+      config:
+        command: ["uv", "run", "uvicorn", "app:app", "--host", "0.0.0.0", "--port", "${DATABRICKS_APP_PORT}"]
+        env:
+          - name: DATABRICKS_WAREHOUSE_ID
+            value_from: sql-warehouse
+          - name: GENIE_SPACE_ID
+            value_from: genie-space
+          - name: DEMO_SECRET_SCOPE
+            value: "dual-app-demo"
+          - name: DEMO_SECRET_KEY
+            value: "greeting"
+      resources:
+        - name: sql-warehouse
+          sql_warehouse:
+            id: ${var.warehouse_id}
+            permission: CAN_USE
+        - name: genie-space
+          genie_space:
+            name: dual-app-genie
+            space_id: ${var.genie_space_id}
+            permission: CAN_RUN
+        - name: secret
+          secret:
+            scope: ${var.secret_scope}
+            key: ${var.secret_key}
+            permission: READ
+
+    # ---------- App A: static site + proxy ----------
+    dual-app-a:
+      name: dual-app-a
+      description: "App A — static site + server-side proxy to App B"
+      source_code_path: ./app-a-frontend
+      config:
+        command: ["uv", "run", "uvicorn", "app:app", "--host", "0.0.0.0", "--port", "${DATABRICKS_APP_PORT}"]
+        env:
+          - name: APP_B_URL
+            value_from: app-b
+      resources:
+        - name: app-b
+          app:
+            name: dual-app-b
+            permission: CAN_USE
+
+targets:
+  dev:
+    default: true
+    mode: development
+    workspace:
+      profile: dev

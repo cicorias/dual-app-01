@@ -5,3 +5,7 @@ __pycache__/
 
 # Databricks bundle
 .databricks/
+
+# Machine-specific bundle overrides (workspace host, etc.)
+*.local.yml
+!*.local.yml.example

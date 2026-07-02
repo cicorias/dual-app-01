@@ -2,6 +2,12 @@ bundle:
   name: dual-app-01
   engine: direct
 
+# Machine-specific overrides (e.g. workspace.host) live in an untracked
+# *.local.yml file so they are never committed. The glob is optional: if no
+# matching file exists, the bundle still loads. See databricks.local.yml.example.
+include:
+  - "*.local.yml"
+
 variables:
   warehouse_id:
     description: SQL warehouse for App B queries and Genie
@@ -70,3 +76,5 @@ targets:
     mode: development
     workspace:
       profile: dev
+      # host is supplied by an untracked *.local.yml include (see
+      # databricks.local.yml.example) so it is not committed to the repo.

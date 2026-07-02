@@ -1,0 +1,7 @@
+# Copy to databricks.local.yml and set your workspace host.
+# This *.local.yml file is git-ignored, so the host is never committed.
+# The Databricks VS Code extension reads the merged bundle and picks it up.
+targets:
+  dev:
+    workspace:
+      host: https://adb-XXXXXXXXXXXX.NN.azuredatabricks.net

@@ -7,7 +7,25 @@ dependencies = [
     # databricks-connect 18 matches serverless environment version 5 (Python 3.12).
     "databricks-connect>=18,<19",
     "databricks-sdk>=0.40.0",
+    "databricks-sql-connector>=3.7.0",
 ]
 
 [tool.uv]
 package = false
+
+[tool.ruff.lint.per-file-ignores]
+# Type stubs intentionally re-export whole namespaces via wildcard imports
+# to inject Databricks notebook globals; F403/F405 are expected here.
+"typings/**/*.pyi" = ["F403", "F405"]
+
+[tool.pyright]
+# NOTE: Do NOT pin venvPath/venv here. This is a multi-project repo (root dev
+# venv + app-a-frontend/.venv + app-b-backend/.venv). Pinning the root .venv
+# forces Pylance to resolve EVERY file against it, so app files that import
+# fastapi/httpx/uvicorn (installed only in the app venvs) show false import
+# errors. Instead, the Python Environments extension binds the correct per-folder
+# interpreter (see .vscode/settings.json -> python-envs.pythonProjects).
+pythonVersion = "3.12"
+# typings/ is Pyright's default stub path; __builtins__.pyi there injects the
+# implicit Databricks notebook globals (spark, dbutils, display, sql, ...).
+stubPath = "typings"

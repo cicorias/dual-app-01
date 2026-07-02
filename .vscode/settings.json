@@ -1,5 +1,24 @@
 {
     "python.defaultInterpreterPath": "${workspaceFolder}/.venv/bin/python",
+    "python.analysis.stubPath": "typings",
+    "python.analysis.typeCheckingMode": "strict",
+    // Python Environments extension (ms-python.vscode-python-envs): register each
+    // component folder as a project so the correct per-folder .venv is bound and
+    // fed to Pylance. Without this, sub-folder venvs are discovered but not
+    // associated, and app files resolve against the root venv (missing fastapi etc).
+    "python-envs.pythonProjects": [
+        {
+            "path": "app-a-frontend",
+            "envManager": "ms-python.python:venv",
+            "packageManager": "ms-python.python:pip"
+        },
+        {
+            "path": "app-b-backend",
+            "envManager": "ms-python.python:venv",
+            "packageManager": "ms-python.python:pip"
+        }
+    ],
+    "python-envs.workspaceSearchPaths": [".venv", "*/.venv"],
     "jupyter.interactiveWindow.cellMarker.codeRegex": "^# COMMAND ----------|^# Databricks notebook source|^(#\\s*%%|#\\s*\\<codecell\\>|#\\s*In\\[\\d*?\\]|#\\s*In\\[ \\])",
     "jupyter.interactiveWindow.cellMarker.default": "# COMMAND ----------"
 }

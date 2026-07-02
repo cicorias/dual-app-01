@@ -4,6 +4,8 @@ version = "0.1.0"
 description = "App A — static site + server-side proxy to App B"
 requires-python = ">=3.12"
 dependencies = [
+    # databricks-connect 18 matches serverless environment version 5 (Python 3.12).
+    "databricks-connect>=18,<19",
     "databricks-sdk>=0.40.0",
     "fastapi>=0.115.0",
     "uvicorn[standard]>=0.32.0",

@@ -3,8 +3,19 @@ uv = "latest"
 python = "3.12"
 
 [tasks.sync]
-description = "Install both apps' dependencies with uv (from each app's pyproject.toml)"
-run = "uv run --no-project scripts/sync.py"
+description = "Install root dev venv (Databricks Connect) + both apps' dependencies with uv"
+run = [
+  "uv sync",
+  "uv run --no-project scripts/sync.py",
+]
+
+[tasks.sync-root]
+description = "Create/refresh the root .venv (Databricks Connect) used by the VS Code extension"
+run = "uv sync"
+
+[tasks.gen-local-config]
+description = "Generate databricks.local.yml from the Databricks profile host (DATABRICKS_CONFIG_PROFILE or 'dev'). Use --force to overwrite."
+run = "uv run --no-project scripts/gen_local_config.py"
 
 [tasks.run-app-b]
 description = "Run App B (Databricks backend) locally on port 8001"
